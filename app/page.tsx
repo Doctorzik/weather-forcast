@@ -8,7 +8,7 @@ import { Field } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import dropdpwIcon from "@/public/images/icon-dropdown.svg"
 import searchImage from "@/public/images/icon-search.svg"
-import { useEffect, useRef, useState } from "react"
+import { useEffect,  useState } from "react"
 import Image from "next/image";
 
 import { WeatherDetailsLoading, WeatherDetailes } from "@/components/molecules/WeatherDetailes";
@@ -16,16 +16,13 @@ import ForecastContainer from "@/components/molecules/ForecastContainer";
 import HourlyWeatherCard from "@/components/molecules/HourlyWeatherCard";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner"
-import { useDebounce, useDebouncedCallback } from "use-debounce"
 
 import clsx from "clsx"
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { fetchDataLocations, formatTime, getDay, getWeatherImage, handleApiError, shortenDay } from '@/lib/utils'
-import WeatherInfoSkeleton from '@/components/molecules/WeatherInfoSkeleton'
 import { WeatherErrorCard } from '@/components/molecules/WeatherErrorCard'
-import { json } from 'stream/consumers'
-import { ArrowBigDownIcon, ArrowDown, Eclipse, EclipseIcon } from 'lucide-react'
+
 
 type locationType =
   {
@@ -86,16 +83,7 @@ type HourlyReport = {
   is_day: number;
 };
 
-type OpenWeatherReverseLocation = {
-  name: string;
-  country: string;
-};
 
-type CountryResponse = {
-  name?: {
-    common?: string;
-  };
-};
 
 export type Params = {
   latitude: number | null;
@@ -379,6 +367,11 @@ export default function Home() {
         <div className="flex  justify-center items-center rounded-sm text-center   focus:ring-2 focus:outline-2  space-x-2  w-10 bg-(--color-neutral-800) relative ">
           <Image src={searchImage} alt="Search Icon" className="mx-2"></Image>
           <Input value={query} onChange={(e) => {
+            
+              setSearchLoading(true)
+            
+            
+           
             setQuery(e.target.value)
           }} type="search" placeholder="Search for a place" className="border-none focus-visible:ring-0 focus:outline:none w-full " />
         </div>
@@ -399,7 +392,7 @@ export default function Home() {
               (
                 data?.map((item, index) => {
                   return (
-                    <div role="button" itemType='button' tabIndex={index + 1} data-value={item.id} onClick={() => {
+                    <div role="button" className='hover:cursor-grab' itemType='button' tabIndex={index + 1} data-value={item.id} onClick={() => {
 
 
                       setQuery(item.name)
@@ -423,7 +416,7 @@ export default function Home() {
         }
 
 
-        <Button disabled={query.length < 1 || !selectedLocation} className={clsx("bg-(--blue-700) p-5 w-full md:w-40",
+        <Button disabled={query.length < 1 || !selectedLocation} className={clsx("bg-(--blue-700) p-5 w-full md:w-40 hover:cursor-grab",
           {
             searchLoading: "disabled",
           }
