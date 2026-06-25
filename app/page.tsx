@@ -227,7 +227,7 @@ export default function Home() {
           setError(true)
       const message =      handleApiError(error)
            setErrormessage(message)
-          console.error(error)
+        
         }
         finally {
           setSearchLoading(false)
@@ -244,8 +244,8 @@ export default function Home() {
 
 
   useEffect(() => {
-    console.log("Running")
-    console.log("I am running the dasy with the ", params)
+    
+    
     const fetchData = async () => {
       try {
 
@@ -279,7 +279,7 @@ export default function Home() {
         const [weatherInfo, countryInfo] = await Promise.all([
           weatherResponse.json(), countryInfoResponse.json()])
 
-        console.log(weatherInfo, countryInfo)
+        
 
 
 
@@ -329,7 +329,7 @@ export default function Home() {
   useEffect(() => {
     getDailyHoulyReport()
   }, [report, day])
-  console.log(searchError, open, report?.current_unit)
+  
   return (
     <div className="min-h-screen space-y-10 px-4 pt-4 pb-12 md:px-8  md:pb-20 m-auto  lg:px-28 lg:pt-12">
 
@@ -431,7 +431,7 @@ export default function Home() {
         )} onClick={() => {
 
           if (!selectedLocation) return
-          console.log(selectedLocation)
+        
           setQuery("")
           setOpen(false)
 
